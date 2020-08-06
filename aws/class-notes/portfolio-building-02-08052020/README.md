@@ -2,7 +2,7 @@
 
 ## Description
 
-Kittens Carousel is a static website application deployed with Apache Web Server on AWS Elastic Compute Cloud (EC2) Instance using AWS Cloudformation Service. 
+Kittens Carousel is a static website application deployed with Apache Web Server on AWS Elastic Compute Cloud (EC2) Instance using AWS Cloudformation Service.
 
 ## Problem Statement
 
@@ -37,8 +37,8 @@ Kittens Carousel is a static website application deployed with Apache Web Server
 ```text
 101-kittens-carousel-static-website-ec2 (folder)
 |
-|----readme.md         # Given to the students (Definition of the project)
-|----cf-template.yml   # To be delivered by students (Cloudformation template)
+|----readme.md          # Given to the students (Definition of the project)
+|----cfn-template.yml   # To be delivered by students (Cloudformation template)
 |----static-web
         |----index.html  # Given to the students (HTML file)
         |----cat0.jpg    # Given to the students (image file)
@@ -47,8 +47,6 @@ Kittens Carousel is a static website application deployed with Apache Web Server
 ```
 
 ## Expected Outcome
-
-![Project 101 : Kittens Carousel Application Snapshot](./project-101-snapshot.png)
 
 ### At the end of the project, following topics are to be covered;
 

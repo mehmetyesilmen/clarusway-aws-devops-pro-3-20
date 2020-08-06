@@ -1,0 +1,12 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+  This template creates Kittens Carousel App on EC2 instance.
+  It also create a security group allowing HTTP (Port 80) and SSH (22) Connections from anywhere.
+
+Resources:
+  set of resources
+
+Outputs:
+  set of outputs
