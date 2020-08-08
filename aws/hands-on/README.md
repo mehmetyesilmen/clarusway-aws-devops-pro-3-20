@@ -13,3 +13,5 @@ List of hands-on trainings within AWS workshop as follows;
 - [Hands-on EC2-07 : Configuring Application Load Balancer (ALB) with Auto Scaling Group (ASG) using Launch Configuration](./ec2-07-configuring-alb-with-asg-and-lc/README.md)
 
 - [Hands-on S3-01 : S3 Website Hosting, Versioning, Logging and Lifecycle Management](./s3-01-hosting-versioning-logging-lifecycle/README.md)
+
+- [Hands-on S3-02 : S3 Bucket Replication](./s3-02-bucket-replication/README.md)
