@@ -1,0 +1,66 @@
+Linux Plus - 08/09/2020 - 03:00pm (EST)
+
+Excercise 1
+Update all installed packages
+List all installed packages starts with http
+Find all available packages starts with http
+Install httpd if available. (Skip confirmations during installation)
+List installed httpd package
+Remove httpd
+List installed httpd package
+
+   43  sudo yum update
+   44  sudo yum list installed http*
+   45  sudo yum list http*
+   46  sudo yum install httpd -y
+   47  sudo yum list installed httpd
+   48  sudo yum autoremove httpd -y
+   49  sudo yum list installed httpd
+
+Excercise 2
+Uninstall git with all unused dependencies 
+Check installed git
+Find previous available git version
+Install previous available git version
+Check installed git version
+Update git to the latest version
+Check installed git version
+
+   52  sudo yum autoremove git -y
+   53  sudo yum list installed git
+   54  sudo yum list git
+   55  sudo yum --showduplicates list git
+   56  sudo yum install git-2.23.1-1.amzn2.0.2
+   57  git --version
+   58  sudo yum update git
+   59  git --version
+
+Excercise 3
+Create a file named countries.csv with the following content
+Country,Capital,Continent
+USA,Washington,North America
+France,Paris,Europe
+Canada,Ottawa,North America
+Germany,Berlin,Europe
+a. Cut only “Continent” column
+b. Remove header
+c. Sort the output
+d. List distinct values
+e. Save final output to “continents.txt” file and display on the screen
+Display content of continents.txt file
+
+   cat countries.csv | cut -d',' -f3 | grep -v Continent | sort | uniq | tee continents.csv
+
+
+   Excercise 4
+a. Search for “clarusway.txt” in the current directory
+b. If it exists display its content
+c. If it does not exist print message “Too early!”
+Create a file named “clarusway.txt” that contains “Congratulations”
+Repeat Step 1
+
+  179  ls clarusway.txt && cat clarusway.txt || echo "Too early"
+  180  echo "Congratulations" > clarusway.txt
+  181  ls clarusway.txt && cat clarusway.txt || echo "Too early"
+  182  cat countries.txt
+
