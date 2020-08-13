@@ -7,10 +7,21 @@ Doubt Clearing Session
 
 JSON & YAML
 
+- YAML extensions
+
+  - YAML Language Support by Red Hat, with built-in Kubernetes syntax support
+  - CloudFormation YAML Snippets for VS Code
+  - YAML :heart: JSON Daniel Hillmann
+  - CloudFormation Linter
+
 Cloudformation
 
 
 Session starts at 7pm EST
+
+Break until 8.20pm EST
+
+Break until 9.16pm EST
 
 
 

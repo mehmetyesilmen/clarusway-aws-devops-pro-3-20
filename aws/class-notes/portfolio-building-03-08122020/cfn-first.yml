@@ -1,0 +1,37 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  My first stack
+  in clarusway
+
+Parameters:
+  KeyPairName:
+    Description: Please select your key name from the list
+    Type: AWS::EC2::KeyPair::KeyName
+
+Resources:
+  MySecGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: MySecGroupforWebServer #required
+      GroupName: CallSecG
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+  MyServer:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: ami-02354e95b39ca8dec
+      InstanceType: t2.micro
+      KeyName: !Ref KeyPairName
+      SecurityGroupIds:
+        - !Ref MySecGroup
+      Tags:
+        - Key: Name
+          Value: Server of My First Stack
