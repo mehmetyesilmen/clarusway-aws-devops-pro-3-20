@@ -1,0 +1,177 @@
+Linux Plus - 08/13/2020 - 07:00pm (EST)
+
+$echo $PS1           : prints current value of the prompt
+
+PS1="[\u@\H - \w ]\$"   : create new prompt
+
+Excercise 1:
+Create a script named my-first-script.sh
+It should print “This is my first script.”
+Make the script executable.
+Execute the script
+
+
+vi my-first-script.sh
+	echo "This is my fisrst script"
+
+chmod +x my-first-script.sh 
+./my-first-script.sh
+
+
+read -p "Enter your name: " name    : read a user input to the name variable
+echo $name              : print name variable content
+
+var1=10
+var2=20
+
+total=$(($var1+$var2))
+let total=$var1+$var2
+
+echo $total
+
+
+Excercise 2:
+Create a script named calculate.sh
+Create a variable named base_value with default value of 5
+Request another number from user and assign it to user_input variable 
+Add user_value to the base-value and assign it to total variable
+Print total to the screen with the message “Total value is”
+Make the script executable.
+Execute the script
+
+base_value=5
+read -p "Enter a number: " user_input
+let total=$base_value+$user_input
+echo "Total value is $total"
+
+
+number=1
+echo $((++number))     : increase the number and print new value
+echo $number
+
+
+Excercise 3:
+Ask user to enter two numbers to variables num1 and num2.
+Calculate the total of 2 numbers.
+Print the total number and increase it by 1.
+Print the new value of the total number.
+Subtract num1 from the total number and print result.
+
+read -p "Enter a number: " num1
+read -p "Enter another number: " num2
+let total=num1+num2
+echo $((total++))
+echo $total
+echo $((total-num1))
+
+
+Conditions:
+read -p "Enter a number: " number
+
+if [ $number -gt 10 ];
+then
+        echo "$number is greater than 10"
+elif [ $number -eq 10 ]
+then
+        echo "$number is equal to 10"
+else
+        echo "$number is less than 10"
+fi
+
+
+Excercise 4:
+Ask user to enter his/her name.
+Ask user to enter his/her age.
+Print user name with one of these messages regarding his/her age:
+age<18 : “Student”
+18<=age<65 : “Worker”
+age>=65 : “Retired”
+
+read -p "Enter your name: " name
+read -p "Enter your age: " age
+
+if [ $age -lt 18 ];
+then
+        echo "$name, you are a Student"
+elif [ $age -ge 18 -a $age -lt 65 ];
+then
+        echo "$name, you are a Worker"
+else
+        echo "$name, you are Retired"
+fi
+
+
+read -p "Enter your name: " name
+read -p "Enter your age: " age
+
+if (($age < 18));
+then
+        echo "$name, you are a Student"
+elif (( (($age >= 18)) && (($age < 65)) ));
+then
+        echo "$name, you are a Worker"
+else
+        echo "$name, you are Retired"
+fi
+
+
+For Loop:
+for ((num = 1 ; num<=100; num=num+5))
+do
+        echo $num
+done
+
+
+for num in {1..100..5};
+do
+	echo $num
+done
+
+
+Excercise 5:
+Calculate sum of the numbers between 1 to 100
+Print result
+
+for num in {1..100}
+do
+        let sum=$sum+$num
+done
+
+echo $sum
+
+
+Excercise 6:
+Ask user to input multiple names in a single line 
+Print “Hello” message for each name in seperate lines. 
+
+read -p "Enter multiple names in a single line: " names
+
+for name in $names;
+do
+        echo "Hello $name"
+done
+
+
+While Loop:
+number=1
+while (( $number <= 10 ))
+do
+        echo $((number++))
+done
+
+
+Excercise 7:
+Ask user to input a name 
+Print “Hello” message and the name entered.
+Repeat step 1 and 2 until user enters “stop” 
+
+while [ True ]
+do
+        read -p "Enter a name (stop for quit): " name
+        if [ $name == stop ];
+        then
+                break
+        fi
+        echo "Hello $name"
+done
+
