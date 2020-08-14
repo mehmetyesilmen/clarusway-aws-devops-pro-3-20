@@ -17,3 +17,5 @@ List of hands-on trainings within AWS workshop as follows;
 - [Hands-on S3-01 : S3 Website Hosting, Versioning, Logging and Lifecycle Management](./s3-01-hosting-versioning-logging-lifecycle/README.md)
 
 - [Hands-on S3-02 : S3 Bucket Replication](./s3-02-bucket-replication/README.md)
+
+- [Hands-on DB-01 : Configuring and Connecting RDS with Console and Workbench](./db-01-configuring-and-connecting-rds-with-console-and-workbrench/README.md)
