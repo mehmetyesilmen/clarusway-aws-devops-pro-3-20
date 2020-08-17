@@ -1,0 +1,90 @@
+Linux Plus - 08/15/2020 - 06:15pm (EST)
+
+#!/bin/bash
+
+file_content=$(cat << END
+this is our
+test
+script
+END
+)
+
+echo $file_content
+
+
+new_content="this \
+        is another \ 
+        example"
+
+
+echo $new_content
+
+Calling python program:
+1. python file.py
+
+2. python -c "print('Hello')""
+
+3. Create here document and call it
+
+code=$(cat <<ANY
+name=input('Enter your name: ')
+print('Hello', name)
+ANY
+)
+python3 -c "$code"
+
+
+Functions:
+
+message="Hello"
+name="Ahmet"
+
+function say_hello() {
+        local name="Ajay"
+        echo "$message $name"
+}
+
+echo "$message $name"
+
+say_hello
+
+echo "$message $name"
+
+
+Excercise:
+Create a function named print_age that accepts one argument
+Ask user to input his/her year of birth and store it to local birth_year variable
+Calculate age using current year value from the first argument
+Print age with a message
+
+Call print_age function with 2020
+
+print_age() {
+        read -p "Enter your birth year: " birth_year
+        let age=$1-birth_year
+        echo "Your age must be $age"
+}
+
+print_age 2020
+
+File watcher excercise:
+
+Write a script that checks periodically whether clarusway.txt exists in the current directory. Control period will be provided as argument.
+If the file is found the script will move the file to the archive directory. File name will be replaced with clarusway_[datetime].txt to keep all the files. “archive” directory needs to be created if not exist.
+Run the script on the background.
+Test the script
+Terminate the script
+
+
+while :
+do
+
+        count=$(find . -name "clarusway.txt" | wc -l)
+        if [ $count -gt 0 ]
+        then
+                ls archive || mkdir archive
+                now=$(date +"%Y_%m_%d_%H_%M_%S")
+                mv clarusway.txt archive/clarusway_$now.txt
+        fi
+        sleep $1
+done
