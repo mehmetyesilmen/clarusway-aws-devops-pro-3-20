@@ -10,5 +10,5 @@ List of teamwork agendas for AWS & DevOps Pro learning path as follows;
 
 - [Teamwork Agenda - 004 : AWS S3, EC2 ASG, CFN, SQL](./pro-tw-004-student.pdf)
 
-- [Teamwork Agenda - 004 : AWS S3, EC2 ASG, CFN, RDS, SQL](./pro-tw-005-student.pdf)
+- [Teamwork Agenda - 005 : AWS S3, EC2 ASG, CFN, RDS, SQL](./pro-tw-005-student.pdf)
 
