@@ -67,7 +67,9 @@ Security Group
 - Grant permissions to the user `hr_guy` for database `clarusway`. :warning: `Note`: You can not use `GRANT ALL` command on RDS DB Instance due to the restriction, following command will give an error.
 
 ```text
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IDENTIFIED BY 'Hr_guy1234' WITH GRANT OPTION' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; 
+check the manual that corresponds to your MySQL server version for the right syntax
+to use near 'IDENTIFIED BY 'Hr_guy1234' WITH GRANT OPTION' at line 1
 ```
 
 - To grant permissions, you need to specify each permission explicitly.
@@ -159,7 +161,7 @@ INSERT INTO `employees` VALUES (115357,'Ivy','Fearey','Structural Engineer',9271
 
 - For `point in time recovery` hands on, please note down the current time. (Exp: August 12, 2020, 22:45:34, UTC +3) and let the students know.
 
-## Part 2 - Taking a Snapshot from RDS DB Instance
+## Part 2 - Taking a Snapshot from RDS DB Instance
 
 - Take a manual snapshot of RDS instance and name it as `manual-snapshot-RDS-mysql`.
 
