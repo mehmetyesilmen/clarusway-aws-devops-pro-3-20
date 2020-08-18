@@ -21,3 +21,5 @@ List of hands-on trainings within AWS workshop as follows;
 - [Hands-on DB-01 : Configuring and Connecting RDS with Console and Workbench](./db-01-configuring-and-connecting-rds-with-console-and-workbrench/README.md)
 
 - [Hands-on DB-02 : Introduction to MariaDB Server](./db-02-intro-to-mariadb-server/README.md)
+
+- [Hands-on DB-04 : Restoring RDS DB Instance from Manual Snapshot and Point in Time](./db-04-restoring-rds-db-instance/README.md)

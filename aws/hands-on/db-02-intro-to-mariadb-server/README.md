@@ -6,15 +6,15 @@ Purpose of the this hands-on training is to set up EC2 instance as a MariaDB ser
 
 At the end of the this hands-on training, students will be able to;
 
-- how to install MariaDB environment to the EC2 Instance.
+- install MariaDB environment on EC2 Instance.
 
 - learn basic concepts of MariaDB database.
 
-- how to configure MariaDB server.
+- configure MariaDB server.
 
-- how to install MariaDB client.
+- install MariaDB client.
 
-- how to connect to MariaDB Server remotely from the MariaDB Client.
+- learn how to connect to MariaDB Server remotely from the MariaDB Client.
 
 ## Outline
 
