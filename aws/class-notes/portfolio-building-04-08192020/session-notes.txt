@@ -1,0 +1,19 @@
+Portfolio Building Session - 04
+Instructor - Callahan
+8/19/2020
+
+REST API
+
+
+- Hands-on Flask-01 : Creating First Flask Application - Hello World
+
+- Hands-on Flask-05 : Creating Bookstore REST API with Flask Framework
+
+
+Session starts at 7pm EST
+
+
+
+
+
+

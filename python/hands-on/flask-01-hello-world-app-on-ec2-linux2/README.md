@@ -69,16 +69,24 @@ Followings are some of features of Flask Framework;
 - Check the python3 version
 
 ```bash
+python --version
+python3 --version
+pip --version
+pip3 --version
 ```
 
 - Install `Python 3 Flask` framework.
 
 ```bash
+pip install flask
+pip3 install flask
 ```
 
 - Check the versions of Flask framework packages (flask, click, itsdangerous, jinja2, markupSafe, werkzeug)
 
 ```bash
+pip list
+pip3 list
 ```
 
 ## Part 3 - Write a Simple Hello World Web Application on GitHub Repo
