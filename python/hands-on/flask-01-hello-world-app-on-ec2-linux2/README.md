@@ -54,16 +54,19 @@ Followings are some of features of Flask Framework;
 - Connect to your instance with SSH.
 
 ```bash
+ssh -i .ssh/call-training.pem ec2-user@ec2-3-15-183-78.us-east-2.compute.amazonaws.com
 ```
 
 - Update the installed packages and package cache on your instance.
 
 ```bash
+sudo yum update -y
 ```
 
 - Install `Python 3` packages.
 
 ```bash
+sudo yum install python3 -y
 ```
 
 - Check the python3 version
@@ -132,16 +135,29 @@ if __name__=="__main__":
 - Save the complete code as `hello-world-app.py` file under `hands-on/flask-01-hello-world-app-on-ec2-linux2` folder.
 
 ```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'Hello World'
+
+if __name__=='__main__':
+   app.run(host='0.0.0.0', port=80)
 ```
 
 - Add and commit all changes on local repo
 
 ```bash
+git add .
+git commit -am 'added hello world app'
 ```
 
 - Push `hello-world-app.py` to remote repo `clarusway-python-workshop` on GitHub.
 
 ```bash
+git push origin master
 ```
 
 ## Part 4 - Run the Hello World App on EC2 Instance
@@ -149,19 +165,23 @@ if __name__=="__main__":
 - Download the web application file from GitHub repo.
 
 ```bash
+wget https://raw.githubusercontent.com/callahan-cw/clarusway-python-workshop/master/hands-on/flask-01-hello-world-app-on-ec2-linux2/hello-world-app.py
 ```
 
 - Run the web application
 
 ```bash
+sudo python3 hello-world-app.py
 ```
 
 - Connect the Hello World application from the web browser
 
 ```text
+http://ec2-3-15-183-78.us-east-2.compute.amazonaws.com
 ```
 
 - Connect the Hello World application from the terminal with `curl` command.
 
 ```bash
+curl -v http://ec2-3-15-183-78.us-east-2.compute.amazonaws.com
 ```
