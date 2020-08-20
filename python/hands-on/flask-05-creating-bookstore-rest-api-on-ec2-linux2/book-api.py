@@ -1,16 +1,18 @@
 # Import Flask modules
-from flask import Flask
+from flask import Flask, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 # Create an object named app
 app = Flask(__name__)
 # Configure sqlite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./bookstore.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db=SQLAlchemy(app)
+db = SQLAlchemy(app)
 
 # Write a function named `init_bookstore_db` which initializes the bookstore db
 # Create books table within sqlite db and populate with sample data
 # Execute the code below only once.
+
+
 def init_bookstore_db():
     drop_table = 'DROP TABLE IF EXISTS books;'
     books_table = """
@@ -35,23 +37,51 @@ def init_bookstore_db():
 # Write a function named `get_all_books` which gets all books from the books table in the db,
 # and return result as list of dictionary
 # `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': True or False} ]`.
+
+
 def get_all_books():
     query = """
     SELECT * FROM books;
     """
 
     result = db.session.execute(query)
-    books = [ {'book_id':row[0], 'title':row[1], 'author':row[2], 'is_sold': bool(row[3])}  for row in result]
+    books = [{'book_id': row[0], 'title':row[1], 'author':row[2],
+              'is_sold': bool(row[3])} for row in result]
     return books
 
 
 # Write a function named `find_book` which finds book using book_id from the books table in the db,
 # and return result as list of dictionary
 # `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': 'Yes' or 'No'} ]`.
+def find_book(id):
+    query = f"""
+    SELECT * FROM books WHERE book_id={id};
+    """
+
+    row = db.session.execute(query).first()
+    book = None
+    if row is not None:
+        book = {'book_id': row[0], 'title': row[1],
+                'author': row[2], 'is_sold': bool(row[3])}
+    return book
 
 # Write a function named `insert_book` which inserts book into the books table in the db,
 # and return the newly added book as dictionary
 # `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': 'Yes' or 'No'} ]`.
+def insert_book(title, author):
+    insert = f"""
+    INSERT INTO books (title, author)
+    VALUES ('{title}', '{author}');
+    """
+    result = db.session.execute(insert)
+    db.session.commit()
+
+    query = f"""
+    SELECT * FROM books WHERE book_id={result.lastrowid};
+    """
+    row = db.session.execute(query).first()
+
+    return {'book_id':row[0], 'title':row[1], 'author':row[2], 'is_sold': bool(row[3])}
 
 # Write a function named `change_book` which updates book into the books table in the db,
 # and return updated added book as dictionary
@@ -62,12 +92,24 @@ def get_all_books():
 
 # Write a function named `home` which returns 'Welcome to the Callahan's Bookstore API Service',
 # and assign to the static route of ('/')
+@app.route('/')
+def home():
+    return "Welcome to Callahan's Bookstore API Service"
 
 # Write a function named `get_books` which returns all books in JSON format for `GET`,
 # and assign to the static route of ('/books')
+@app.route('/books', methods=['GET'])
+def get_books():
+    return jsonify({'books': get_all_books()})
 
-# Write a function named `get_books` which returns the book with given book_id in JSON format for `GET`,
+# Write a function named `get_book` which returns the book with given book_id in JSON format for `GET`,
 # and assign to the static route of ('/books/<int:book_id>')
+@app.route('/books/<int:book_id>', methods=['GET'])
+def get_book(book_id):
+    book = find_book(book_id)
+    if book == None:
+        abort(404)
+    return jsonify({'book found':book})
 
 # Write a function named `add_book` which adds new book using `POST` methods,
 # and assign to the static route of ('/books')
@@ -82,4 +124,8 @@ def get_all_books():
 
 # Write a function named `bad_request` for handling 400 errors which returns 'Bad Request' in JSON format.
 
-# Add a statement to run the Flask application which can be reached from any host on port 80.
+
+# Add a statement to run the Flask application which can be reached from any host on port 5000.
+if __name__ == "__main__":
+    init_bookstore_db()
+    app.run(debug=True)
