@@ -88,68 +88,199 @@ Within this hands-on, we will create a `Bookstore` Application as Web Service.  
 
 ```python
 # Import Flask modules
-
+from flask import Flask, jsonify, abort, request
+from flask_sqlalchemy import SQLAlchemy
 # Create an object named app
-
+app = Flask(__name__)
 # Configure sqlite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./bookstore.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 # Write a function named `init_bookstore_db` which initializes the bookstore db
 # Create books table within sqlite db and populate with sample data
 # Execute the code below only once.
 
+
+def init_bookstore_db():
+    drop_table = 'DROP TABLE IF EXISTS books;'
+    books_table = """
+    CREATE TABLE books(
+    book_id INTEGER PRIMARY KEY,
+    title VARCHAR NOT NULL,
+    author VARCHAR,
+    is_sold BOOLEAN NOT NULL DEFAULT 0 CHECK(is_sold IN(0,1)));
+    """
+    data = """
+    INSERT INTO books (title, author, is_sold)
+    VALUES
+        ("Where the Crawdads Sing", "Delia Owens", 1 ),
+        ("The Vanishing Half: A Novel", "Brit Bennett", 0),
+        ("1st Case", "James Patterson, Chris Tebbetts", 0);
+    """
+    db.session.execute(drop_table)
+    db.session.execute(books_table)
+    db.session.execute(data)
+    db.session.commit()
+
 # Write a function named `get_all_books` which gets all books from the books table in the db,
 # and return result as list of dictionary
-# `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': 'Yes' or 'No'} ]`.
+# `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': True or False} ]`.
+
+
+def get_all_books():
+    query = """
+    SELECT * FROM books;
+    """
+
+    result = db.session.execute(query)
+    books = [{'book_id': row[0], 'title':row[1], 'author':row[2],
+              'is_sold': bool(row[3])} for row in result]
+    return books
+
 
 # Write a function named `find_book` which finds book using book_id from the books table in the db,
 # and return result as list of dictionary
 # `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': 'Yes' or 'No'} ]`.
+def find_book(id):
+    query = f"""
+    SELECT * FROM books WHERE book_id={id};
+    """
+
+    row = db.session.execute(query).first()
+    book = None
+    if row is not None:
+        book = {'book_id': row[0], 'title': row[1],
+                'author': row[2], 'is_sold': bool(row[3])}
+    return book
 
 # Write a function named `insert_book` which inserts book into the books table in the db,
 # and return the newly added book as dictionary
 # `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': 'Yes' or 'No'} ]`.
+def insert_book(title, author):
+    insert = f"""
+    INSERT INTO books (title, author)
+    VALUES ('{title}', '{author}');
+    """
+    result = db.session.execute(insert)
+    db.session.commit()
+
+    query = f"""
+    SELECT * FROM books WHERE book_id={result.lastrowid};
+    """
+    row = db.session.execute(query).first()
+
+    return {'book_id':row[0], 'title':row[1], 'author':row[2], 'is_sold': bool(row[3])}
 
 # Write a function named `change_book` which updates book into the books table in the db,
 # and return updated added book as dictionary
 # `[{'book_id': 1, 'title':'XXXX', 'author': 'XXXXXX', 'is_sold': 'Yes' or 'No'} ]`.
+def change_book(book):
+    update = f"""
+    UPDATE books
+    SET title='{book['title']}', author = '{book['author']}', is_sold = {book['is_sold']}
+    WHERE book_id= {book['book_id']};
+    """
+
+    result = db.session.execute(update)
+    db.session.commit()
+
+    query = f"""
+    SELECT * FROM books WHERE book_id={book['book_id']};
+    """
+    row = db.session.execute(query).first()
+    return {'book_id':row[0], 'title':row[1], 'author':row[2], 'is_sold': bool(row[3])}
 
 # Write a function named `remove_book` which removes book from the books table in the db,
 # and returns True if successfully deleted or False.
+def remove_book(book):
+    delete = f"""
+    DELETE FROM books
+    WHERE book_id= {book['book_id']};
+    """
+
+    result = db.session.execute(delete)
+    db.session.commit()
+
+    query = f"""
+    SELECT * FROM books WHERE book_id={book['book_id']};
+    """
+    row = db.session.execute(query).first()
+
+    return True if row is None else False
+
 
 # Write a function named `home` which returns 'Welcome to the Callahan's Bookstore API Service',
 # and assign to the static route of ('/')
+@app.route('/')
+def home():
+    return "Welcome to Callahan's Bookstore API Service"
 
 # Write a function named `get_books` which returns all books in JSON format for `GET`,
 # and assign to the static route of ('/books')
+@app.route('/books', methods=['GET'])
+def get_books():
+    return jsonify({'books': get_all_books()})
 
-# Write a function named `get_books` which returns the book with given book_id in JSON format for `GET`,
+# Write a function named `get_book` which returns the book with given book_id in JSON format for `GET`,
 # and assign to the static route of ('/books/<int:book_id>')
+@app.route('/books/<int:book_id>', methods=['GET'])
+def get_book(book_id):
+    book = find_book(book_id)
+    if book == None:
+        abort(404)
+    return jsonify({'book found':book})
 
 # Write a function named `add_book` which adds new book using `POST` methods,
 # and assign to the static route of ('/books')
+@app.route('/books', methods=['POST'])
+def add_book():
+    if not request.json or not 'title' in request.json:
+        abort(400)
+    return jsonify({'newly added book':insert_book(request.json['title'], request.json.get('author', ''))}), 201
 
 # Write a function named `update_book` which updates an existing book using `PUT` method,
 # and assign to the static route of ('/books/<int:book_id>')
+@app.route('/books/<int:book_id>', methods=['PUT'] )
+def update_book(book_id):
+    book = find_book(book_id)
+    if book == None:
+        abort(404)
+    if not request.json:
+        abort(400)
+    book['title']=request.json.get('title', book['title'])
+    book['author']=request.json.get('author', book['author'])
+    book['is_sold']=int(request.json.get('is_sold', int(book['is_sold'])))
+    return jsonify({'updated book': change_book(book)})
 
 # Write a function named `delete_book` which updates an existing book using `DELETE` method,
 # and assign to the static route of ('/books/<int:book_id>')
+@app.route('/books/<int:book_id>', methods=['DELETE'])
+def delete_book(book_id):
+    book = find_book(book_id)
+    if book == None:
+        abort(404)
+    return jsonify({'result':remove_book(book)})
 
-# Write a function named `not_found` for handling 404 errors which returns 'Not found' in JSON format.
-
-# Write a function named `bad_request` for handling 400 errors which returns 'Bad Request' in JSON format.
-
-# Add a statement to run the Flask application which can be reached from any host on port 80.
+# Add a statement to run the Flask application which can be reached from any host on port 5000.
+if __name__ == "__main__":
+    init_bookstore_db()
+    #app.run(debug=True)
+    app.run(host='0.0.0.0', port=80)
 
 ```
 
 - Add and commit all changes on local repo
 
 ```bash
+git add .
+git commit -m 'added book-api.py'
 ```
 
 - Push all the files to remote repo `clarusway-python-workshop` on GitHub.
 
 ```bash
+git push origin master
 ```
 
 ## Part 3 - Deploying the REST API Implementation with Flask Server on Amazon Linux 2 EC2 Instance
@@ -159,31 +290,37 @@ Within this hands-on, we will create a `Bookstore` Application as Web Service.  
 - Connect to your instance with SSH.
 
 ```bash
+ssh -i .ssh/call-training.pem ec2-user@ec2-3-15-183-78.us-east-2.compute.amazonaws.com
 ```
 
 - Update the installed packages and package cache on your instance.
 
 ```bash
+sudo yum update -y
 ```
 
 - Install `Python 3` packages.
 
 ```bash
+sudo yum install python3 -y
 ```
 
 - Check the python3 version
 
 ```bash
+python3 --version
 ```
 
 - Install `Python 3 Flask` framework.
 
 ```bash
+sudo pip3 install flask
 ```
 
 - Install `flask_sqlalchemy`.
 
 ```bash
+sudo pip3 install flask_sqlalchemy
 ```
 
 ## Part 4 - Testing the API Implementation on EC2 Instance
@@ -191,59 +328,65 @@ Within this hands-on, we will create a `Bookstore` Application as Web Service.  
 - Download the web application file from GitHub repo.
 
 ```bash
+wget https://raw.githubusercontent.com/callahan-cw/clarusway-python-workshop/master/hands-on/flask-04-creating-rest-api-on-ec2-linux2/app-form-handling.py/book-api.py 
 ```
 
 - Run the `Bookstore` API.
 
 ```bash
+sudo python3 book-api.py
 ```
 
 - Open the `Bookstore` API from the web browser.
 
 ```bash
+localhost:5000
 ```
 
 - Open the `Bookstore` API default `/` page from the terminal with `curl` command.
 
 ```bash
+curl localhost:5000/books
 ```
 
 - List all book in  the `Bookstore` API using `/books` path and HTTP `GET` method with `curl` command.
 
 ```bash
+curl -X GET localhost:5000/books
 ```
 
 - Retrieve book with `id=3` using `/books/3` path and HTTP `GET` method with `curl` command.
 
 ```bash
+curl -X GET localhost:5000/books/3
 ```
 
 - Try to retrieve non-existing book using `/books/10` path and HTTP `GET` method with `curl` command to see 404 response.
 
 ```bash
+curl -X GET localhost:5000/books/10
 ```
 
 - Create new book the `Bookstore` using `/books` path and HTTP `POST` method with `curl` command.
 
 ```bash
+curl -X POST -H "Content-Type: application/json" -d '{"title":"Hands-on  with Call"}'  localhost:5000/books
 ```
 
 - Add author to the book with `id=4` using `/books/4` path and HTTP `PUT` method with `curl` command.
 
 ```bash
-```
-
-- Update book with `id=2` as done using `/books/2` path and HTTP `PUT` method with `curl` command.
-
-```bash
+curl -X PUT -H "Content-Type: application/json" -d '{"author":"Callahan"}'  localhost:5000/books/4
 ```
 
 - Delete book with `id=1` as done using `/books/1` path and HTTP `PUT` method with `curl` command.
 
 ```bash
+curl -X DELETE  localhost:5000/books/1
 ```
 
 - List all books with latest states from the web browser.
 
 ```bash
+curl -X GET localhost:5000/books
 ```
