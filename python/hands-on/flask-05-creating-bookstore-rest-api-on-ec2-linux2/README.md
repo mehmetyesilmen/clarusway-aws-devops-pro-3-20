@@ -379,7 +379,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"title":"Hands-on  with Ca
 curl -X PUT -H "Content-Type: application/json" -d '{"author":"Callahan"}'  localhost:5000/books/4
 ```
 
-- Delete book with `id=1` as done using `/books/1` path and HTTP `PUT` method with `curl` command.
+- Delete book with `id=1` using `/books/1` path and HTTP `DELETE` method with `curl` command.
 
 ```bash
 curl -X DELETE  localhost:5000/books/1
