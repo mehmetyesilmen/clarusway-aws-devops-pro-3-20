@@ -6,7 +6,19 @@ Project-102 : Kittens Carousel Static Website deployed on AWS Application Load B
 
 Session starts at 7pm EST
 
+Break until 8.20pm
 
+Template
+
+Resources
+- Security Group for ALB
+- ALB
+- Target Group
+- ALB Listener (Connection between ALB and TG)
+
+- Security Group for Web Servers
+- Launch Template
+- Auto-scaling Group (Pass TG to ASG)
 
 
 
