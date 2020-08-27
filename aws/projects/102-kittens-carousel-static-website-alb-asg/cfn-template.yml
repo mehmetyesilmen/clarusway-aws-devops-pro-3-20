@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: |
   Cloudformation Template for Kittens Carousel Application
   This app will run on ALB and ASG.
-  
 Resources:
   ALBSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
@@ -32,6 +31,7 @@ Resources:
       Port: 80
       Protocol: HTTP
       TargetType: instance
+      VpcId: !GetAtt WebServersSecGroup.VpcId
   ALB:
     Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Properties:
@@ -75,8 +75,8 @@ Resources:
               #! /bin/bash
               yum update -y
               yum install httpd -y
-              TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-              FOLDER="https://$TOKEN@"
+              TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              FOLDER="https://$TOKEN@raw.githubusercontent.com/clarusway/clarusway-aws-devops-pro-3-20/master/aws/projects/102-kittens-carousel-static-website-alb-asg/static-web/"
               curl -s --create-dirs -o "/var/www/html/index.html" -L "$FOLDER"index.html
               curl -s --create-dirs -o "/var/www/html/cat0.jpg" -L "$FOLDER"cat0.jpg
               curl -s --create-dirs -o "/var/www/html/cat1.jpg" -L "$FOLDER"cat1.jpg
