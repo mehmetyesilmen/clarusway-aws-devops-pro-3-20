@@ -10,6 +10,8 @@ Session starts at 7pm EST
 
 Break until 8.20pm
 
+Break until 9.10pm
+
 
 
 Cloudformation Template Resources
