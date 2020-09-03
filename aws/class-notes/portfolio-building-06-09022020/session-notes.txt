@@ -7,6 +7,11 @@ Project-103 : To-Do Web API (Python Flask) deployed on AWS EC2 and RDS using Clo
 Session starts at 7pm EST
 
 
+
+Break until 8.20pm
+
+
+
 Cloudformation Template Resources
 
 - Security Group for RDS DB Instance

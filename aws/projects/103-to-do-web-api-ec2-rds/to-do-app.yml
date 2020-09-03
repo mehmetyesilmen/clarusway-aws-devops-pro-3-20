@@ -1,0 +1,116 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  Cloudformation Template for To Do Application...
+  App is running on Python Flask Framework..
+
+Resources:
+  WebServerSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: Enable HTTP for To Do Web API #required
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+  WebServerHost:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: ami-02354e95b39ca8dec
+      InstanceType: t2.micro
+      SecurityGroupIds:
+        - !Ref WebServerSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub Web Server of ${AWS::StackName}
+      UserData: 
+        Fn::Base64:
+          !Sub 
+            - |
+              #! /bin/bash
+              yum update -y
+              yum install python3 -y
+              pip3 install flask
+              pip3 install flask_mysql
+              echo "${MyDBURI}" > /home/ec2-user/dbserver.endpoint
+              TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              FOLDER=""
+              
+
+            - MyDBURI: !GetAtt MyDatabaseServer.Endpoint.Address
+
+  MyDBSecurityGroup:
+    Type: "AWS::RDS::DBSecurityGroup"
+    Properties:
+      DBSecurityGroupIngress: #required
+        - Ingress
+      EC2VpcId: String
+      GroupDescription: String #required
+      Tags:
+        - Tag
+  MyDatabaseServer:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      AllocatedStorage: String
+      AllowMajorVersionUpgrade: Boolean
+      AssociatedRoles:
+        - DBInstanceRole
+      AutoMinorVersionUpgrade: Boolean
+      AvailabilityZone: String
+      BackupRetentionPeriod: Integer
+      CACertificateIdentifier: String
+      CharacterSetName: String
+      CopyTagsToSnapshot: Boolean
+      DBClusterIdentifier: String
+      DBInstanceClass: String #required
+      DBInstanceIdentifier: String
+      DBName: String
+      DBParameterGroupName: String
+      DBSecurityGroups:
+        - String
+      DBSnapshotIdentifier: String
+      DBSubnetGroupName: String
+      DeleteAutomatedBackups: Boolean
+      DeletionProtection: Boolean
+      Domain: String
+      DomainIAMRoleName: String
+      EnableCloudwatchLogsExports:
+        - String
+      EnableIAMDatabaseAuthentication: Boolean
+      EnablePerformanceInsights: Boolean
+      Engine: String
+      EngineVersion: String
+      Iops: Integer
+      KmsKeyId: String
+      LicenseModel: String
+      MasterUserPassword: String
+      MasterUsername: String
+      MaxAllocatedStorage: Integer
+      MonitoringInterval: Integer
+      MonitoringRoleArn: String
+      MultiAZ: Boolean
+      OptionGroupName: String
+      PerformanceInsightsKMSKeyId: String
+      PerformanceInsightsRetentionPeriod: Integer
+      Port: String
+      PreferredBackupWindow: String
+      PreferredMaintenanceWindow: String
+      ProcessorFeatures:
+        - ProcessorFeature
+      PromotionTier: Integer
+      PubliclyAccessible: Boolean
+      SourceDBInstanceIdentifier: String
+      SourceRegion: String
+      StorageEncrypted: Boolean
+      StorageType: String
+      Tags:
+        - Tag
+      Timezone: String
+      UseDefaultProcessorFeatures: Boolean
+      VPCSecurityGroups:
+        - String
+  
+  
+  
+
+Outputs:
