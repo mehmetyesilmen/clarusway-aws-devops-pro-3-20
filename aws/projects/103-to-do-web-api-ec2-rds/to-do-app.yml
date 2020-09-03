@@ -3,6 +3,10 @@ Description: |
   Cloudformation Template for To Do Application...
   App is running on Python Flask Framework..
 
+Parameters:
+  EC2ImageId:
+    Description: Select image id
+    Type: AWS::EC2::Image::Id
 Resources:
   WebServerSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
@@ -16,7 +20,7 @@ Resources:
   WebServerHost:
     Type: "AWS::EC2::Instance"
     Properties:
-      ImageId: ami-02354e95b39ca8dec
+      ImageId: !Ref EC2ImageId
       InstanceType: t2.micro
       SecurityGroupIds:
         - !Ref WebServerSecurityGroup
@@ -33,7 +37,7 @@ Resources:
               pip3 install flask
               pip3 install flask_mysql
               echo "${MyDBURI}" > /home/ec2-user/dbserver.endpoint
-              TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
               FOLDER="https://$TOKEN@raw.githubusercontent.com/clarusway/clarusway-aws-devops-pro-3-20/master/aws/projects/103-to-do-web-api-ec2-rds/"
               curl -s --create-dirs -o "/home/ec2-user/app.py" -L "$FOLDER"/to-do-api.py
               python3 /home/ec2-user/app.py
