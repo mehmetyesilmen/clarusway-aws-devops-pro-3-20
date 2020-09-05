@@ -1,0 +1,27 @@
+Portfolio Building Session - 056
+Instructor - Callahan
+9/2/2020
+
+Project-103 : To-Do Web API (Python Flask) deployed on AWS EC2 and RDS using Cloudformation
+
+Session starts at 7pm EST
+
+
+
+Break until 8.20pm
+
+Break until 9.10pm
+
+
+
+Cloudformation Template Resources
+
+- Security Group for RDS DB Instance
+
+- RDS DB Instance
+
+- Security Group for Web API
+
+- EC2 Instance
+
+

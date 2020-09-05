@@ -13,3 +13,5 @@ List of coding challenges within Python workshop as follows;
 - [CC - 005 : Find the Most Frequent Letter](./cc-005-find-the-most-frequent-letter/README.md)
 
 - [CC - 006 : Find the Non-Repeated Values](./cc-006-find-non-repeated-values/README.md)
+
+- [CC - 007 : Check Consecutive Vowels](./cc-007-check-consecutive-vowels/README.md)
