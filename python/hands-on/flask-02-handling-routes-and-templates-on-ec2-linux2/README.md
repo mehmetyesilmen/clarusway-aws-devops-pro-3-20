@@ -55,31 +55,37 @@ The server responds to that request with an HTTP response message. Within the re
 - Connect to your instance with SSH.
 
 ```bash
+ssh -i <path-to-your-pem-file> ec2-user@<public-dns-name-of-ec2>
 ```
 
 - Update the installed packages and package cache on your instance.
 
 ```bash
+sudo yum update -y
 ```
 
 - Install `Python 3` packages.
 
 ```bash
+sudo yum install python3 -y
 ```
 
 - Check the python3 version
 
 ```bash
+python3 --version
 ```
 
 - Install `Python 3 Flask` framework.
 
 ```bash
+sudo pip3 install Flask
 ```
 
 - Check the versions of Flask framework packages (flask, click, itsdangerous, jinja2, markupSafe, werkzeug)
 
 ```bash
+pip3 list
 ```
 
 ## Part 3 - Write a Web Application with Sample Routings and Templating on GitHub Repo
@@ -91,7 +97,69 @@ The server responds to that request with an HTTP response message. Within the re
 - Write an application with routing and templating samples and save the complete code under `hands-on/flask-02-handling-routes-and-templates-on-ec2-linux2` folder.
 
 ```python
+from flask import Flask, redirect, url_for, render_template
 
+app = Flask(__name__)
+
+
+@app.route('/')
+def home():
+    return 'This is home page for "/" path. <h1> Wellcome To Clarusway Hands-on </h1>'
+
+@app.route('/about')
+def about():
+    return '<h1> This is my about page... </h1>'
+
+@app.route('/error')
+def error():
+    return '<h1> Either you encountered an error or you are not authorized. </h1>'
+
+@app.route('/hello')
+def hello():
+    return '<h1>Hello from Callahan</h1>'
+
+@app.route('/admin', methods=['GET'])
+def admin():
+    authorized=False
+    if authorized:
+        return 'This the admin page... only admins can see this page'
+    else:
+        return redirect(url_for('error'))
+
+# @app.route('/<name>')
+# def greet(name):
+#     greet_format=f"""
+#     <!DOCTYPE html>
+#     <html>
+#     <head>
+#         <title>Greeting Page</title>
+#     </head>
+#     <body>
+#         <h1>Hello, { name }!</h1>
+#         <h1>Welcome to my Greeting Page</h1>
+#     </body>
+#     </html>
+#     """
+#     return greet_format
+
+@app.route('/greet-admin')
+def greet_admin():
+    return redirect(url_for('greet', name='Master Admin!!!'))
+
+@app.route('/<name>')
+def greet(name):
+    return render_template('greet.html', person=name)
+
+@app.route('/list10')
+def list10():
+    return render_template('list10.html')
+
+@app.route('/evens')
+def evens():
+    return render_template('evens.html')
+
+if __name__ == '__main__':
+    app.run(host='localhost', port=5000, debug=True)
 ```
 
 - Write a template html file named `greet.html` which takes `name` as parameter under `templates` folder 
@@ -155,13 +223,14 @@ The server responds to that request with an HTTP response message. Within the re
 - Add and commit all changes on local repo
 
 ```bash
-
+git add .
+git commit -m 'updated hansd-on flask 02'
 ```
 
 - Push `app.py`, `greet.html`, `list10.html`, `evens.html`, and `mytext.txt` to remote repo `clarusway-python-workshop` on GitHub.
 
 ```bash
-
+git push
 ```
 
 ## Part 4 - Run the Hello World App on EC2 Instance
