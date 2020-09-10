@@ -238,13 +238,13 @@ git push
 - Download the web application file from GitHub repo.
 
 ```bash
-
+wget ...
 ```
 
 - Run the web application
 
 ```bash
-
+localhost:5000/hello
 ```
 
 - Connect the route handling and templating web application from the web browser and try every routes configured
@@ -253,14 +253,14 @@ git push
 
 ```
 
-- Open the static file `mytext.txt` context from the web browser
+- Open the static file `message.txt` context from the web browser
 
 ```bash
-
+localhost:5000/static/message.txt
 ```
 
 - Connect the route handling and templating web application from the terminal with `curl` command.
 
 ```bash
-
+curl localhost:5000/hello
 ```
