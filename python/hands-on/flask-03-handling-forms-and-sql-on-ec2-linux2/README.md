@@ -12,7 +12,7 @@ At the end of the this hands-on training, students will be able to;
 
 - build a web application with Python Flask framework.
 
-- handle forms using the flask-wtf module.
+- handle forms using the flask-wtf module. 
 
 - configure connection to the `sqlite` database.
 
