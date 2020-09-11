@@ -1,0 +1,83 @@
+Cohorts		: US AD 3/20
+Lesson		: Python
+Session 	: 7
+Instructor 	: Raymond 
+Starts 		: 6:20 pm EST
+Ends 		: 8:00 pm EST
+
+
+capitals = {'Maryland': 'Annapolis',
+            'Virginia': 'Richmon'}
+capitals.update({'Virginia': 'Richmond', 'DC': 'Washington'})
+
+print(capitals)
+
+del capitals['Maryland']
+
+print(capitals)
+
+print('Maryland' in capitals)
+
+friends = { (1,2): {'first': 'Sue', 'last': 'Bold'}, 
+(2,3): {'first': 'Steve', 'last': 'Smith'}}
+
+print(friends[(2,3)])
+
+
+
+# flower_list = ['rose', 'violet', 'carnation', 'rose', 'orchid', 'rose', 'orchid']
+# flower_set = set(flower_list)
+# flower_list2 = list(flower_set)
+
+# print(flower_list)
+# print(flower_set)
+# print(flower_list2)
+
+# print(list(flower_set)[2])
+
+flower_1 = {'rose', 'violet', 'carnation', 'rose', 'orchid', 'rose', 'orchid'}
+flower_2 = {'violet', 'rose', 'orchid', 'carnation', 'rose'}
+
+print(flower_1)
+print(flower_2)
+
+
+set1 = {'a', 'b', 'c', 'd'}
+set2 = {'b', 'd', 'e', 'f'}
+
+print(set1.difference(set2))
+print(set2.difference(set1))
+print(set1.difference(set2) | set2.difference(set1))
+
+
+set1 = {'08/29/2020'}
+set2 = set('08/29/2020')
+
+print(set1)
+print(set2)
+
+
+# set1 = set('Washington')
+# set2 = set('Wellington')
+
+# print(set1)
+# print(set2)
+# set1 = set('Wellington')
+# print(set1)
+# print(set2)
+
+# print(set1.difference(set2))
+# print(set1.union(set2))
+# print(set1.intersection(set2))
+# print(set1.difference(set2).union(set2.difference(set1)))
+
+s1 = {'istanbul'}
+s2 = {'sidney'}
+print(s1)
+print(s2)
+print(s1.difference(s2))
+s1 = set('istanbul')
+s2 = set('sidney')
+print(s1)
+print(s2)
+print(s1.difference(s2))
