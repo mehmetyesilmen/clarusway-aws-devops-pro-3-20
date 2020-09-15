@@ -1,0 +1,17 @@
+Portfolio Building Session - 7
+Instructor - Callahan
+9/9/2020
+
+Hands-on Flask-02 : Handling Routes and Templating with Flask Web Application
+
+Hands-on Flask-03 : Handling Forms and SQL with Flask Web Application
+
+Session starts at 7pm EST
+
+
+Break Until 9.35pm EST
+
+
+HTTP Port  --> 80
+HTTPS Port --> 443
+

@@ -15,3 +15,5 @@ List of coding challenges within Python workshop as follows;
 - [CC - 006 : Find the Non-Repeated Values](./cc-006-find-non-repeated-values/README.md)
 
 - [CC - 007 : Check Consecutive Vowels](./cc-007-check-consecutive-vowels/README.md)
+
+- [CC - 008 : Generate Password](./cc-008-generate-password/README.md)

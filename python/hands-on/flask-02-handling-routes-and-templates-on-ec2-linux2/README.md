@@ -1,0 +1,266 @@
+# Hands-on Flask-02 : Handling Routes and Templates with Flask Web Application
+
+Purpose of the this hands-on training is to give the students introductory knowledge of how to handle routes and use html templates within a Flask web application on Amazon Linux 2 EC2 instance. 
+
+## Learning Outcomes
+
+At the end of the hands-on training, students will be able to;
+
+- install Python and Flask framework on Amazon Linux 2 EC2 instance
+
+- build a simple web application with Flask framework.
+
+- understand the HTTP request-response cycle and structure of URL.
+
+- create routes (or views) with Flask.
+
+- serve static content and files using Flask.
+
+- serve dynamic content using the html templates.
+
+- write html templates using Jinja Templating Engine.
+
+## Outline
+
+- Part 1 - Getting to know routing and HTTP URLs.
+
+- Part 2 - Install Python and Flask framework Amazon Linux 2 EC2 Instance 
+
+- Part 3 - Write a Web Application with Sample Routings and Templating on GitHub Repo
+
+- Part 4 - Run the Web App on EC2 Instance
+
+## Part 1 - Getting to know routing and HTTP URLs.
+
+HTTP (Hypertext Transfer Protocol) is a request-response protocol. A client on one side (web browser) asks or requests something from a server and the server on the other side sends a response to that client. When we open our browser and write down the URL (Uniform Resource Locator), we are requesting a resource from a server and the URL is the address of that resource. The structure of typical URL is as the following.
+
+![URL anatomy](./url-structure.png)
+
+The server responds to that request with an HTTP response message. Within the response, a status code element is a 3-digit integer defines the category of response as shown below.
+
+- 1xx -> Informational
+
+- 2xx -> Success
+
+- 3xx -> Redirection
+
+- 4xx -> Client Error
+
+- 5xx -> Server Error
+
+## Part 2 - Install Python and Flask framework Amazon Linux 2 EC2 Instance 
+
+- Launch an Amazon EC2 instance using the Amazon Linux 2 AMI with security group allowing SSH (Port 22) and HTTP (Port 80) connections.
+
+- Connect to your instance with SSH.
+
+```bash
+ssh -i <path-to-your-pem-file> ec2-user@<public-dns-name-of-ec2>
+```
+
+- Update the installed packages and package cache on your instance.
+
+```bash
+sudo yum update -y
+```
+
+- Install `Python 3` packages.
+
+```bash
+sudo yum install python3 -y
+```
+
+- Check the python3 version
+
+```bash
+python3 --version
+```
+
+- Install `Python 3 Flask` framework.
+
+```bash
+sudo pip3 install Flask
+```
+
+- Check the versions of Flask framework packages (flask, click, itsdangerous, jinja2, markupSafe, werkzeug)
+
+```bash
+pip3 list
+```
+
+## Part 3 - Write a Web Application with Sample Routings and Templating on GitHub Repo
+
+- Create folder named `flask-02-handling-routes-and-templates-on-ec2-linux2` within `clarusway-python-workshop` repo
+
+- Create python file named `app.py`
+
+- Write an application with routing and templating samples and save the complete code under `hands-on/flask-02-handling-routes-and-templates-on-ec2-linux2` folder.
+
+```python
+from flask import Flask, redirect, url_for, render_template
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def home():
+    return 'This is home page for "/" path. <h1> Wellcome To Clarusway Hands-on </h1>'
+
+@app.route('/about')
+def about():
+    return '<h1> This is my about page... </h1>'
+
+@app.route('/error')
+def error():
+    return '<h1> Either you encountered an error or you are not authorized. </h1>'
+
+@app.route('/hello')
+def hello():
+    return '<h1>Hello from Callahan</h1>'
+
+@app.route('/admin', methods=['GET'])
+def admin():
+    authorized=False
+    if authorized:
+        return 'This the admin page... only admins can see this page'
+    else:
+        return redirect(url_for('error'))
+
+# @app.route('/<name>')
+# def greet(name):
+#     greet_format=f"""
+#     <!DOCTYPE html>
+#     <html>
+#     <head>
+#         <title>Greeting Page</title>
+#     </head>
+#     <body>
+#         <h1>Hello, { name }!</h1>
+#         <h1>Welcome to my Greeting Page</h1>
+#     </body>
+#     </html>
+#     """
+#     return greet_format
+
+@app.route('/greet-admin')
+def greet_admin():
+    return redirect(url_for('greet', name='Master Admin!!!'))
+
+@app.route('/<name>')
+def greet(name):
+    return render_template('greet.html', person=name)
+
+@app.route('/list10')
+def list10():
+    return render_template('list10.html')
+
+@app.route('/evens')
+def evens():
+    return render_template('evens.html')
+
+if __name__ == '__main__':
+    app.run(host='localhost', port=5000, debug=True)
+```
+
+- Write a template html file named `greet.html` which takes `name` as parameter under `templates` folder 
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Greeting Page</title>
+</head>
+<body>
+    <h1>Hello, {{ name }}!</h1>
+    <h1>Welcome to my Greeting Page</h1>
+</body>
+</html>
+```
+
+- Write a template html file named `list10.html` which shows a list counting from 1 to 10 under `templates` folder 
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List 10</title>
+</head>
+<body>
+    <h1>Created 10 List Items</h1>
+    <ul>
+     {% for x in range(1,11) %}
+        <li>List item {{ x }} </li>
+     {% endfor %}
+    </ul>
+</body>
+</html>
+```
+
+- Write a template html file named `evens.html` which shows a list of even numbers from 1 to 10 under `templates` folder 
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Evens</title>
+</head>
+<body>
+    <h1>Showing Even Number from 1 to 10</h1>
+    <ul>
+     {% for x in range(1,11) %}
+        {% if x % 2 == 0 %}
+        <li>Number {{ x }} is even</li>
+        {% endif %}
+     {% endfor %}
+    </ul>
+</body>
+</html>
+```
+
+
+- Create a folder named `static` under `flask-02-handling-routes-and-templates-on-ec2-linux2` folder and create a text file named `mytext.txt` with *This is a text file in static folder* content.
+
+- Add and commit all changes on local repo
+
+```bash
+git add .
+git commit -m 'updated hansd-on flask 02'
+```
+
+- Push `app.py`, `greet.html`, `list10.html`, `evens.html`, and `mytext.txt` to remote repo `clarusway-python-workshop` on GitHub.
+
+```bash
+git push
+```
+
+## Part 4 - Run the Hello World App on EC2 Instance
+
+- Download the web application file from GitHub repo.
+
+```bash
+wget ...
+```
+
+- Run the web application
+
+```bash
+localhost:5000/hello
+```
+
+- Connect the route handling and templating web application from the web browser and try every routes configured
+
+```bash
+
+```
+
+- Open the static file `message.txt` context from the web browser
+
+```bash
+localhost:5000/static/message.txt
+```
+
+- Connect the route handling and templating web application from the terminal with `curl` command.
+
+```bash
+curl localhost:5000/hello
+```

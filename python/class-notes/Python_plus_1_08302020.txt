@@ -1,0 +1,102 @@
+Cohorts		: US AD 3/20
+Lesson		: Python+
+Session 	: 1
+Instructor 	: Raymond 
+Starts 		: 3:00 pm EST
+Ends 		: 5:45 pm EST
+
+
+def multiply(num1, num2):
+    print(num1 * num2)
+
+multiply(3, 5)
+
+multiply(5, 10)
+
+multiply(4, 2)
+
+-----------
+Calculator:
+
+def calculator(num1, num2, operator):
+    if operator == "+":
+        print(num1 + num2)
+    elif operator == "-":
+        print(num1 - num2)
+    elif operator == "*":
+        print (num1 * num2)
+    elif operator == "/":
+        print(num1 / num2)
+    else:
+        print("Invalid operator!")
+
+calculator(5,3,"+")
+
+
+-----
+Return:
+
+def calculator(num1, num2, operator):
+    if operator == "+":
+        return(num1 + num2)
+    elif operator == "-":
+        return(num1 - num2)
+    elif operator == "*":
+        return(num1 * num2)
+    elif operator == "/":
+        return(num1 / num2)
+    else:
+        return("Invalid operator!")
+
+res = calculator(2,7,"*")
+print(res)
+
+------
+
+def abs(num):
+    if num>=0:
+        return num
+    else:
+        return -num
+
+print(abs(-5))
+
+-------------------
+Docstring:
+
+def my_abs(num):
+    """this function is created by Ahmet
+    and returns the absolute form of input value"""
+
+    if num>=0:
+        return num
+    else:
+        return -num
+
+print(my_abs(-5))
+print(my_abs.__doc__)
+
+----------------------
+
+def texter(a, b, c):
+    print(a,b,c)
+
+texter(c="you", b="love",  a="I")
+texter(a="I", c="you", b="love")
+texter(b="love",  c="you", a="I")
+
+
+------
+def slicer(*nums):
+    even=[]
+    odd=[]
+    for num in nums:
+        if num % 2 == 0:
+            even.append(num)
+        else:
+            odd.append(num)
+
+    print("Even: ", even)
+    print("Odd: ", odd)       
+
+slicer(1,2,3,4,5)
