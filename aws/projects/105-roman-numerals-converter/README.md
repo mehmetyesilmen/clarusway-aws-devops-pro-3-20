@@ -1,7 +1,8 @@
 # Project-105 : Roman Numerals Converter Application (Python Flask) deployed on AWS EC2 with Cloudformation
 
 ## Description
-The Roman Numerals Converter Application aims to convert the given number to the Roman numerals. The application is to be coded in Python and deployed as a web application with Flask on AWS Elastic Compute Cloud (EC2) Instance using AWS Cloudformation Service. 
+
+The Roman Numerals Converter Application aims to convert the given number to the Roman numerals. The application is to be coded in Python and deployed as a web application with Flask on AWS Elastic Compute Cloud (EC2) Instance using AWS Cloudformation Service.
 
 ## Problem Statement
 
@@ -10,8 +11,8 @@ The Roman Numerals Converter Application aims to convert the given number to the
 - Your company has recently started on a project that aims to be one of the most used unit converters and formulas website. Roman Numerals Converter is the part of the project. So you and your colleagues have started to work on the project.
 
 - As a first step of the project, you need to write program that converts the given number (between 1 and 3999) to the roman numerals. The program should convert only from numbers to Roman numerals, not vice versa and during the conversion following notes should be taken into consideration.
-   
-```
+
+```text
 Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 - Symbol       Value
 - I             1
@@ -105,9 +106,9 @@ Ten         Warning with "Not Valid! Please enter a number between 1 and 3999, i
 
 - Algorithm design
 
-- Programming with Python 
+- Programming with Python
 
-- Web application programming with Python Flask Framework 
+- Web application programming with Python Flask Framework
 
 - Bash scripting
 
@@ -139,7 +140,7 @@ Ten         Warning with "Not Valid! Please enter a number between 1 and 3999, i
 
 ## Steps to Solution
   
-- Step 1: Download or clone project definition from `clarusway-aws-workshop` repo on Github 
+- Step 1: Download or clone project definition from `clarusway-aws-workshop` repo on Github
 
 - Step 2: Create project folder for local public repo on your pc
 
