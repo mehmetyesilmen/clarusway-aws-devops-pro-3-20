@@ -7,5 +7,13 @@ Hands-on Flask-03 : Handling Forms and SQL with Flask Web Application
 Session starts at 7pm EST
 
 
+Break until 9.10pm EST
 
+
+
+
+
+Type of Coding Conventions
+
+CamelCase -- 
 
