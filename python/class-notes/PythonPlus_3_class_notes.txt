@@ -1,0 +1,151 @@
+Cohorts		: US AD 3/20
+Lesson		: Python+
+Session 	: 3
+Instructor 	: Raymond 
+Starts 		: 3:00 pm EST
+Ends 		: 5:45 pm EST
+
+
+for i in range(1,11):
+    print(i, ' is ', ('less than 5' if i<5 else 'greater than five') if i%2 == 0 else 'odd')
+
+
+for i in range(1,11):
+    if(i%2 == 0):
+        if(i<5 ):
+            print('less than 5')
+        else:
+            print('greater than five')
+    else:
+        print('odd')
+
+
+--------
+print((lambda x: x**2)(3))
+
+
+def square(x):
+    y=x**2
+    return y
+
+print(square(3))
+
+
+print(3**2)
+
+
+l=[1,5,3,6,8]
+s='Moldir'
+print((lambda iterable: iterable[::-1])(s))
+
+
+Task :
+Write a Python program that types ‘even’ or ‘odd’ in accordance with the numbers in a list.
+Use lambda function and loop.
+Your code must contain no more than 2 lines. 
+
+for i in [1, 2, 3, 4]:
+    print(i, ":", (lambda x:  'even' if x%2==0 else 'odd')(i))
+
+
+reverser = lambda x: x[::-1]
+
+print(reverser('Can'))
+print(reverser('Ajay'))
+
+
+Let's square all the numbers in the list using map() and lambda. Consider this pre-class example :
+
+itr  = [1, 2, 3, 4, 5]
+
+pwr = []
+for i in itr:
+    pwr.append(i**2)
+print(pwr)
+
+print(list(map(lambda x: x**2, itr)))
+
+
+l1 = [ 'o', 's', 't', 't']
+l2 = [ 'n', 'i', 'e', 'w']
+l3 = [ 'e', 'x', 'n', 'o']
+
+c = []
+for i in range(len(l1)):
+    c.append(l1[i] + l2[i] + l3[i])
+print(c)
+
+print(list(map(lambda x,y,z: x+y+z, l1, l2, l3)))
+
+
+Using lambda in map() function, write a program that sets three meaningful sentences derived from the elements in the following three lists in accordance with their order. 
+Print these sentences on separate lines.
+
+l1 = [ 'you', 'much', 'hard']
+l2 = [ 'i', 'you', 'he']
+l3 = [ 'love', 'ate', 'works']
+
+sentences = map(lambda x,y,z: x + ' ' + y + ' ' + z, l2, l3, l1)
+
+for i in sentences:
+    print(i)
+
+
+Using lambda in filter() function, write a program that filters out words (elements of the given list) with less than 5 chars.
+Print these words which has less than 5 chars on separate lines.
+
+ words = ['apple','swim','clock','me','kiwi','banana']
+less_than_5 = filter(lambda x:len(x)<5, words)
+print('Less than 5 letter words',list(less_than_5))
+
+
+
+This time, let’s filter the vowels from the given letters in a list.
+Print these letters in a list.
+
+listofwowels = ['a', 'e', 'i', 'o', 'u']
+first_ten = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',]
+vowels = filter(lambda x: x in listofwowels, first_ten)
+print('Vowels are :', list(vowels))
+
+
+-------
+def mod(n):
+    return lambda x: x ** n
+
+power2 = mod(2)  # lambda x: x ** 2
+
+print(power2(3))
+
+power5 = mod(5)  # lambda x: x: ** 5
+
+print(power5(9))
+
+
+
+def mod(n):
+    return lambda x: x * n
+
+repeat2 = mod(2)  # lambda x: x * 2
+print(repeat2('Aydin'))
+=
+print(mod(2)('Aydin'))
+
+repeat5 = mod(5)  # lambda x: x * 5
+print(repeat5('Aydin'))
+=
+print(mod(5)('Aydin'))
+
+
+Define a simple function (def) named functioner using lambda to create your own print function with emoji faces. 
+
+def functioner(n):
+    return lambda x: print(x, n)
+
+smile = functioner(':)')  # lambda x: print(x, ':)')
+sad = functioner(':(')# lambda x: print(x, ':(')
+neutral = functioner(':|')# lambda x: print(x, ':|')
+
+smile('hello')
+sad('hello')
+neutral('hello')
