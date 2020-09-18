@@ -1,0 +1,130 @@
+Cohorts		: US AD 3/20
+Lesson		: Linux Plus
+Session 	: Recap
+Instructor 	: Raymond 
+Starts 		: 7:00 pm EST
+Ends 		: 10:00 pm EST
+
+Q1:
+Create a user named dev_user
+Set  password of dev_user as clarusway 
+Create a group named dev_team 
+Add dev_user user to the group dev_team
+Display groups of dev_user user 
+Remove dev_user from dev_team group
+Display groups of dev_user user 
+Delete dev_team group
+Delete dev_user user with home directory
+
+  sudo useradd dev_user
+  sudo passwd dev_user
+  sudo groupadd dev_team
+  sudo usermod -a -G dev_team dev_user
+  sudo groups dev_user
+  sudo gpasswd -d dev_user dev_team
+  sudo groups dev_user
+  sudo groupdel dev_team
+  sudo userdel -r dev_user
+
+
+Q2:
+Update all installed packages
+Check if mariadb is already installed 
+Find available mariadb packages 
+Install mariadb. (Skip confirmations during installation)
+List installed mariadb package
+Uninstall mariadb with all unused dependencies
+List installed mariadb package
+
+  sudo yum update -y
+  sudo yum list installed mariadb
+  sudo yum list mariadb
+  sudo yum list --showduplicates mariadb
+  sudo yum install mariadb -y
+  sudo yum list installed mariadb
+  sudo yum autoremove mariadb
+  sudo yum list installed mariadb
+
+
+Q3:
+1. a. Search for “clarusway.txt” in the current directory
+   b. If it exists display its content
+   c. If it does not exist print message “Too early!”
+2. Create a file named “clarusway.txt” that contains “Congratulations”
+3. Repeat Step 1
+
+	ls clarusway.txt && cat clarusway.txt || echo "Too Early"
+	echo "Congratulations" > clarusway.txt
+	ls clarusway.txt && cat clarusway.txt || echo "Too Early"
+
+
+Q4:
+1. Write a script that;
+	Accepts 2 numbers as arguments.
+	Calculates the total of 2 numbers.
+	Prints the total number as num1 + num2 = total.
+2. Make the script executable
+3. Add home directory to the PATH
+4. Execute the script
+
+	vi sum.sh
+		#!/bin/bash
+		let total=$1+$2
+		echo "$1 + $2 = $total"
+
+	chmod +x sum.sh
+
+	PATH=$PATH:~
+
+	sum.sh 4 9
+
+
+Q5:
+1. Create a file named passwords.csv with the following content
+	User,Password
+	finance,xJ2a_Pl1
+	tech,Qc8r7!2P
+	hr,l30o_2mM
+	operation,12345678
+	marketing,qwertyui
+	sales,abcdefgh
+2. Write a script that accepts user name as argument and prints the correspondent password.
+
+	1. cat > passwords.csv
+            User,Password
+			finance,xJ2a_Pl1
+			tech,Qc8r7!2P
+			hr,l30o_2mM
+			operation,12345678
+			marketing,qwertyui
+			sales,abcdefgh
+	2. vi get-password.sh
+   			cat passwords.csv | grep $1 | cut -d' ' -f2
+
+
+Q6:
+Write a script that accepts username as argument
+if argument is empty use current user’s name
+find description of the user and print it
+if description is empty print “No description”
+
+#!/bin/bash
+
+user=''
+if [ $1 ]
+then
+        user=$1
+else
+        user=$(whoami)
+fi
+
+echo "User name: $user"
+
+description=$(cat /etc/passwd | grep $user | cut -d':' -f5)
+
+if [ "$description" != "" ]
+then
+        echo $description
+else
+        echo "No description"
+fi
